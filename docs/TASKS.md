@@ -1,17 +1,7 @@
-# Current Tasks for Blog Service
+## Current Sprint/Iteration Tasks
 
-## Sprint/Iteration Tasks
+### High Priority:
+- Resolve "no main manifest attribute" error for `blog-service` container.
 
-### High Priority
-- [ ] Verify microservice architecture setup (Eureka registration).
-- [ ] Ensure all services can communicate correctly.
-
-### Medium Priority
-- [ ] Implement basic CRUD operations for comments.
-
-### Low Priority
-- [ ] Update API documentation for new features.
-
-## Assignees
-- [ ] Developer A: Task 1
-- [ ] Developer B: Task 2
+### Verification:
+- Verify full functionality of all services (Eureka, Keycloak, Blog Service, Nginx) once `blog-service` is successfully running.

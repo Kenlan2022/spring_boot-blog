@@ -1,0 +1,15 @@
+{
+  "realm": "spring-boot-realm",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "spring-boot-client",
+      "secret": "my-secret",
+      "publicClient": false,
+      "redirectUris": ["http://localhost:8081/*"],
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": true
+    }
+  ]
+}

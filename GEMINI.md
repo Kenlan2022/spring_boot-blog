@@ -95,6 +95,7 @@ Project overview, setup instructions, and usage examples
 
 ### Error Handling Protocol
 1. **Analyze the error message**: Break down what the error means
+2. **Distinguish Build Phases**: Differentiate between compilation errors (e.g., missing symbols), test failures (e.g., security-related 401/403s), and container build issues (e.g., file not found in build context).
 2. **Check common causes**: Version mismatch, missing dependencies, configuration issues
 3. **Suggest debugging steps**: Logging, step-by-step verification
 4. **Provide fallback solutions**: Alternative approaches if primary solution fails

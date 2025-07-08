@@ -1,0 +1,7 @@
+refactor(project): Convert to multi-module project and update tests
+
+- Converted the project to a multi-module structure, including `blog-service` and `eureka-server`.
+- Moved Maven Wrapper files (`mvnw`, `mvnw.cmd`, `.mvn/wrapper/maven-wrapper.properties`) to the project root.
+- Updated `pom.xml` files in `blog-service` and `eureka-server` to use the new parent project dependency.
+- Modified `BlogApplicationTests` to disable Eureka client and activate the 'test' profile for isolated testing.
+- Adjusted imports in `PostControllerTest`.

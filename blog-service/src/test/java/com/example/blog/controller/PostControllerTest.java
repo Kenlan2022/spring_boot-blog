@@ -9,12 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 
@@ -27,10 +29,13 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-@WebMvcTest(PostController.class)
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
+
+@WebMvcTest(controllers = PostController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
+@AutoConfigureMockMvc
 class PostControllerTest {
 
     @Autowired
@@ -64,6 +69,7 @@ class PostControllerTest {
     }
 
     @Test
+    @WithMockUser
     void createPost_shouldReturnCreatedPost() throws Exception {
         when(postService.createPost(any(CreatePostRequest.class))).thenReturn(postDto);
 
@@ -128,6 +134,7 @@ class PostControllerTest {
     }
 
     @Test
+    @WithMockUser
     void updatePost_shouldReturnUpdatedPost() throws Exception {
         when(postService.updatePost(anyLong(), any(UpdatePostRequest.class))).thenReturn(postDto);
 

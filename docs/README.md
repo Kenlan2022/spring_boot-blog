@@ -5,14 +5,18 @@ This is the backend service for the blog application, responsible for managing p
 ## Getting Started
 
 ### Prerequisites
+- Docker and Docker Compose
 - Java 17 or higher
 - Maven
-- Running Eureka Server (on http://localhost:8761)
 
 ### Build and Run
-1. Navigate to the `blog-service` directory.
-2. Run `mvnw.cmd clean install` to build the project.
-3. Run `java -jar target/blog-0.0.1-SNAPSHOT.jar` to start the service.
+1. Start the infrastructure (Keycloak, Nginx, Eureka Server):
+   ```bash
+   docker-compose up -d
+   ```
+2. Navigate to the `blog-service` directory.
+3. Run `mvnw.cmd clean install` to build the project.
+4. Run `java -jar target/blog-0.0.1-SNAPSHOT.jar` to start the service.
 
 ## API Documentation
 Refer to `docs/API.md` for detailed API endpoints and usage.

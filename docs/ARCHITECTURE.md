@@ -34,6 +34,14 @@ The Blog Service is a Spring Boot application that provides RESTful APIs for man
 
 ## External Integrations
 
+### Keycloak
+- The Blog Service is integrated with Keycloak for user authentication and authorization.
+- It acts as an OAuth2 Resource Server, validating JWTs issued by Keycloak.
+
+### Nginx
+- Nginx is used as a reverse proxy in front of the application.
+- It routes requests to the appropriate services (blog-service or Keycloak).
+
 ### Eureka Server
 - The Blog Service registers itself with the Eureka Server for service discovery.
 - Other microservices can discover and communicate with the Blog Service via Eureka.
