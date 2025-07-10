@@ -42,6 +42,26 @@ Deletes a blog post by its ID.
   - `id` (path): The ID of the post to delete.
 - **Response:** `204 No Content` on successful deletion, or `404 Not Found` if the post does not exist.
 
+#### `GET /api/posts/tags/{tagName}`
+Retrieves all posts associated with a specific tag.
+
+- **Parameters:**
+  - `tagName` (path): The name of the tag.
+- **Response:** `200 OK` with an array of `PostDto` objects.
+
+### Tags
+
+#### `GET /api/tags`
+Retrieves a list of all tags.
+
+- **Response:** `200 OK` with an array of `TagDto` objects.
+
+#### `POST /api/tags`
+Creates a new tag.
+
+- **Request Body:** `CreateTagRequest` object.
+- **Response:** `201 Created` with the newly created `TagDto` object.
+
 ## Data Transfer Objects (DTOs)
 
 ### `PostDto`
@@ -51,7 +71,13 @@ Deletes a blog post by its ID.
   "title": "string",
   "content": "string",
   "author": "string",
-  "createdAt": "2025-07-06T12:00:00Z"
+  "createdAt": "2025-07-06T12:00:00Z",
+  "tags": [
+    {
+      "id": "string",
+      "name": "string"
+    }
+  ]
 }
 ```
 
@@ -60,7 +86,8 @@ Deletes a blog post by its ID.
 {
   "title": "string",
   "content": "string",
-  "author": "string"
+  "author": "string",
+  "tags": ["string"]
 }
 ```
 
@@ -68,6 +95,22 @@ Deletes a blog post by its ID.
 ```json
 {
   "title": "string",
-  "content": "string"
+  "content": "string",
+  "tags": ["string"]
+}
+```
+
+### `TagDto`
+```json
+{
+  "id": "string",
+  "name": "string"
+}
+```
+
+### `CreateTagRequest`
+```json
+{
+  "name": "string"
 }
 ```

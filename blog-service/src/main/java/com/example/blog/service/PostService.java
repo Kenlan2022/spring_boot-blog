@@ -1,7 +1,7 @@
 package com.example.blog.service;
 
-import com.example.blog.dto.PostDto;
 import com.example.blog.dto.CreatePostRequest;
+import com.example.blog.dto.PostDto;
 import com.example.blog.dto.UpdatePostRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +20,6 @@ public interface PostService {
     PostDto updatePost(Long id, UpdatePostRequest updatePostRequest);
 
     void deletePost(Long id);
+
+    List<PostDto> getPostsByTagName(String tagName);
 }

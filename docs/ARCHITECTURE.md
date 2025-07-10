@@ -22,7 +22,7 @@ The Blog Service is a Spring Boot application that provides RESTful APIs for man
 - Uses Spring Data JPA for database interactions.
 
 ### 4. Entity Layer (`com.example.blog.entity`)
-- Defines the data model (e.g., `Post` entity).
+- Defines the data model (e.g., `Post`, `Tag` entities).
 - Mapped to database tables.
 
 ### 5. DTO Layer (`com.example.blog.dto`)

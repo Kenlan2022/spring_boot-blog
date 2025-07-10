@@ -34,8 +34,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 
-@WebMvcTest(controllers = PostController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = PostController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class PostControllerTest {
 
     @Autowired

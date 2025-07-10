@@ -10,8 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -57,5 +57,11 @@ public class PostController {
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/tags/{tagName}")
+    public ResponseEntity<List<PostDto>> getPostsByTagName(@PathVariable String tagName) {
+        List<PostDto> posts = postService.getPostsByTagName(tagName);
+        return ResponseEntity.ok(posts);
     }
 }

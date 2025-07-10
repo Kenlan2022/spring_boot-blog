@@ -2,20 +2,25 @@ package com.example.blog.service.impl;
 
 import com.example.blog.dto.CreatePostRequest;
 import com.example.blog.dto.PostDto;
+import com.example.blog.dto.TagDto;
 import com.example.blog.dto.UpdatePostRequest;
 import com.example.blog.entity.Post;
+import com.example.blog.entity.Tag;
 import com.example.blog.repository.PostRepository;
+import com.example.blog.repository.TagRepository;
 import com.example.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +28,7 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+    private final TagRepository tagRepository;
     private final Parser markdownParser = Parser.builder().build();
     private final HtmlRenderer htmlRenderer = HtmlRenderer.builder().escapeHtml(true).build();
 
@@ -31,6 +37,9 @@ public class PostServiceImpl implements PostService {
         Post post = new Post();
         post.setTitle(createPostRequest.getTitle());
         post.setContent(createPostRequest.getContent());
+
+        Set<Tag> tags = getTagsFromRequest(createPostRequest.getTags());
+        post.setTags(tags);
 
         Post savedPost = postRepository.save(post);
 
@@ -68,6 +77,9 @@ public class PostServiceImpl implements PostService {
         post.setTitle(updatePostRequest.getTitle());
         post.setContent(updatePostRequest.getContent());
 
+        Set<Tag> tags = getTagsFromRequest(updatePostRequest.getTags());
+        post.setTags(tags);
+
         Post updatedPost = postRepository.save(post);
         return convertToDto(updatedPost);
     }
@@ -78,6 +90,28 @@ public class PostServiceImpl implements PostService {
             throw new RuntimeException("Post not found with id: " + id);
         }
         postRepository.deleteById(id);
+    }
+
+    @Override
+    public List<PostDto> getPostsByTagName(String tagName) {
+        return postRepository.findByTags_Name(tagName).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    private Set<Tag> getTagsFromRequest(Set<String> tagNames) {
+        if (tagNames == null || tagNames.isEmpty()) {
+            return new HashSet<>();
+        }
+
+        return tagNames.stream()
+                .map(tagName -> tagRepository.findByName(tagName)
+                        .orElseGet(() -> {
+                            Tag newTag = new Tag();
+                            newTag.setName(tagName);
+                            return newTag;
+                        }))
+                .collect(Collectors.toSet());
     }
 
     private PostDto convertToDto(Post post) {
@@ -91,6 +125,19 @@ public class PostServiceImpl implements PostService {
         String html = htmlRenderer.render(document);
         postDto.setHtmlContent(html);
 
+        if (post.getTags() != null) {
+            postDto.setTags(post.getTags().stream()
+                    .map(this::convertTagToDto)
+                    .collect(Collectors.toSet()));
+        }
+
         return postDto;
+    }
+
+    private TagDto convertTagToDto(Tag tag) {
+        TagDto tagDto = new TagDto();
+        tagDto.setId(tag.getId());
+        tagDto.setName(tag.getName());
+        return tagDto;
     }
 }
